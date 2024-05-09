@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <title>Home Forecast</title>
+
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poetsen+One&display=swap" rel="stylesheet">
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"  type="text/javascript" charset="utf-8"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"  type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body>
+    <h1>Home Forecast</h1>
+    <p>Welcome to HomeValue Finder, the premier destination for accurate and real-time predictions of home prices. Our website leverages cutting-edge machine learning algorithms to analyze current market trends, historical data, and key property features to provide you with the most precise home value estimates. <br><br>
+    Enter Required values in the given fields and press predict to get predicted price and show it on map.<br>
+    You can also adjust additional factors by clicking show addtional features.</p>
+    <div class="container">
+    <form action="/predict" method="post" id="f1">
+      <div class="maincontent">
+          <label for="bedrooms">Number of Bedrooms:</label>
+          <input type="number" name="bedrooms" value="{{ bedrooms }}" required/><br /><br />
+    
+          <label for="bathrooms">Number of Bathrooms:</label>
+          <input type="number" name="bathrooms" value="{{ bathrooms }}" required/><br /><br />
+    
+          <label for="livingArea">Living Area:</label>
+          <input type="number" name="livingArea"  value="{{ living_area }}" required/><br /><br />
+    
+          <label for="latitude">Latitude:</label>
+          <input type="text" name="latitude" id="lat" value="{{ latitude }}" required/><br /><br />
+    
+          <label for="longitude">Longitude:</label>
+          <input type="text" name="longitude" id="lng" value="{{ longitude }}" required/><br /><br />
+    
+          <label for="postalCode">Postal Code:</label>
+          <input type="text" name="postalCode" value="{{ postal_code }}" required /><br /><br />
+    
+          <label for="builtYear">Built Year:</label>
+          <input type="number" name="builtYear" value="{{ built_year }}" required/><br /><br />
+        
+        <button type="button" onclick="toggleFeatures()">
+          Show Additional Features
+        </button>
+        <button type="submit" onclick="marker()">Predict</button>
+      </div>
+        <!-- Additional features -->
+        <div id="additionalFeatures" class="hidden">
+          <label for="lotArea">Lot Area:</label>
+          <input type="number" name="lotArea" value="5000" required /><br /><br />
+    
+          <label for="floors">Number of Floors:</label>
+          <input type="number" name="floors" value="2" required/><br /><br />
+    
+          <label for="views">Number of Views:</label>
+          <input type="number" name="views" value="0" required/><br /><br />
+    
+          <label for="grade">Grade of the House:</label>
+          <input type="number" name="grade" value="8" required/><br /><br />
+    
+          <label for="area_w/o_base">Area of the House (excluding basement):</label>
+          <input type="number" name="area_w/o_base" value="1802" required/><br /><br />
+    
+          <label for="area_base">Area of the Basement:</label>
+          <input type="number" name="area_base" value="296" required/><br /><br />
+    
+          <label for="ren_year">Renovation Year:</label>
+          <input type="number" name="ren_year" value="91" required/><br /><br />
+    
+          <label for="liv_area_ren">Living Area (Renovated):</label>
+          <input type="number" name="liv_area_ren" value="1997" required/><br /><br />
+    
+          <label for="lot_area_ren">Lot Area (Renovated):</label>
+          <input type="number" name="lot_area_ren" value="12754" required/><br /><br />
+        </div>
+
+      </form>
+      <div style="width: 640px; height: 480px" id="mapContainer"></div>
+    </div>
+    {% if prediction_text %}
+        <h2>{{ prediction_text }}</h2>
+    {% endif %}
+    
+    <script type="text/javascript" src="../static/script.js"></script>
+</body>
+</html>
